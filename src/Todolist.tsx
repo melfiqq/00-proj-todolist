@@ -1,4 +1,5 @@
 import React from "react"
+import { FilterValueType } from "./App"
 
 export type TaskType = {
     id: number
@@ -9,8 +10,8 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: TaskType[]
-    removeTask: Function
-    changeFilter: Function
+    removeTask: (id: number) => void
+    changeFilter: (value: FilterValueType) => void
 }
 
 export function Todolist(props: PropsType) {
