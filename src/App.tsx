@@ -31,6 +31,17 @@ function App() {
     setTasks(newTasks)
   }
 
+  function changeStatus(taskId: string, isDone: boolean) {
+    let task = tasks.find( t => t.id === taskId)
+    if (task) {
+      task.isDone = isDone
+    }
+    /* setTasks([...tasks]) - the same */
+    let copy = [ ...tasks ] //деструктуризация опять тут
+    setTasks(copy)
+  } 
+
+
   function changeFilter(value: FilterValueType) {
     setFilter(value);
   }
@@ -51,6 +62,7 @@ function App() {
         removeTask={removeTask}
         changeFilter={changeFilter}
         addTask={addTask}
+        changeTaskStatus={changeStatus}
       />
     </div>
   );
