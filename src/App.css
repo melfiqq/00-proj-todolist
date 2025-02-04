@@ -18,3 +18,7 @@
 .active-filter {
   background-color: rgb(224, 148, 195);
 }
+
+.is-done {
+  opacity: 0.5;
+}
