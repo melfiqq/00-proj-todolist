@@ -20,19 +20,22 @@ type PropsType = {
 export function Todolist(props: PropsType) {
 
   const [newTaskTitle, setNewTaskTitle] = useState("")
+  const [error, setError] = useState<string | null>(null)
 
   const addTask = () => {
-    if (newTaskTitle.trim()  === "") {
-      return
-    } 
-    props.addTask(newTaskTitle)
-    setNewTaskTitle("")
+    if (newTaskTitle.trim() !== "") {
+      props.addTask(newTaskTitle.trim())
+      setNewTaskTitle("")
+    } else {
+      setError("Field is reqired")
+    }
   } 
 
   const onNewTitleCHangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value) /*currentTarget - some event happend to currentTarget. so input will have the value from the input - event - user typing - typing some value - cuttentTarget */
   }
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    setError(null) //ошибка у нас - когда мы пытаемся вставить пустое. так что здесь мы при нажатии на любую клавишу, которая не делает null, ошибка будет обнуляться. зануляем стейт. 
     if (e.key === "Enter") {
       addTask()
     }
@@ -58,8 +61,10 @@ const onCompletedClickHandler = () => {
           value={newTaskTitle} 
           onChange={onNewTitleCHangeHandler} 
           onKeyDown={onKeyPressHandler}
+          className={error ? "error" : ""}
         />
         <button onClick={onCLickHandler}>+</button>
+        {error && <div className="error-message">{error}</div>}
       </div>
 
       <ul>
