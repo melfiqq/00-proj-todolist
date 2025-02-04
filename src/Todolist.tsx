@@ -1,5 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 import { FilterValueType } from "./App"
+import { title } from "process"
 
 export type TaskType = {
     id: string
@@ -20,18 +21,24 @@ export function Todolist(props: PropsType) {
 
   const [newTaskTitle, setNewTaskTitle] = useState("")
 
+  const addTask = () => {
+    if (newTaskTitle.trim()  === "") {
+      return
+    } 
+    props.addTask(newTaskTitle)
+    setNewTaskTitle("")
+  } 
+
   const onNewTitleCHangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value) /*currentTarget - some event happend to currentTarget. so input will have the value from the input - event - user typing - typing some value - cuttentTarget */
   }
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      props.addTask(newTaskTitle)
-      setNewTaskTitle("")
+      addTask()
     }
   }
   const onCLickHandler = () => {
-    props.addTask(newTaskTitle) 
-          setNewTaskTitle("")
+    addTask()
   }
 const onAllClickHandler = () => {
   props.changeFilter("all")
