@@ -14,6 +14,7 @@ function App() {
     { id: v1(), title: "PHP", isDone: false },
     { id: v1(), title: "Redux", isDone: false }
   ]);
+
   let [filter, setFilter] = useState<FilterValueType>("all");
 
   function removeTask(id: string) {
@@ -63,6 +64,7 @@ function App() {
         changeFilter={changeFilter}
         addTask={addTask}
         changeTaskStatus={changeStatus}
+        filter={filter}
       />
     </div>
   );
