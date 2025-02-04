@@ -3,19 +3,20 @@ import { FilterValueType } from "./App"
 import { title } from "process"
 
 export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
+  id: string
+  title: string
+  isDone: boolean
 }
 
 type PropsType = {
-    title: string
-    tasks: TaskType[]
-    removeTask: (id: string) => void
-    changeFilter: (value: FilterValueType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (id: string, isDone: boolean) => void
-    filter: FilterValueType
+  id: string
+  title: string
+  tasks: TaskType[]
+  removeTask: (id: string) => void
+  changeFilter: (value: FilterValueType, todolistId: string) => void
+  addTask: (title: string) => void
+  changeTaskStatus: (id: string, isDone: boolean) => void
+  filter: FilterValueType
 }
 
 export function Todolist(props: PropsType) {
@@ -44,15 +45,15 @@ export function Todolist(props: PropsType) {
   const onCLickHandler = () => {
     addTask()
   }
-const onAllClickHandler = () => {
-  props.changeFilter("all")
-}
-const onActiveClickHandler = () => {
-  props.changeFilter("active")
-}
-const onCompletedClickHandler = () => {
-  props.changeFilter("completed")
-}
+  const onAllClickHandler = () => {
+    props.changeFilter("all", props.id)
+  }
+  const onActiveClickHandler = () => {
+    props.changeFilter("active", props.id)
+  }
+  const onCompletedClickHandler = () => {
+    props.changeFilter("completed", props.id)
+  }
 
   return (
     <div>
