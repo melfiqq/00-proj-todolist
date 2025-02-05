@@ -35,14 +35,15 @@ function App() {
     setTasks({...tasksObj})
   }
 
-  function changeStatus(taskId: string, isDone: boolean) {
-    let task = tasksObj.find( t => t.id === taskId)
+  function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
+    let tasks = tasksObj[todolistId]
+    let task = tasks.find( t => t.id === taskId)
     if (task) {
       task.isDone = isDone
     }
     /* setTasks([...tasks]) - the same */
-    let copy = [ ...tasksObj ] //деструктуризация опять тут
-    setTasks(copy)
+    /* let copy = [ ...tasksObj ] */ //деструктуризация опять тут
+    setTasks({...tasksObj})
   } 
 
 
@@ -59,8 +60,15 @@ function App() {
 
   let [todolists, setTodolists] = useState<Array<TodolistType>> ([
     {id: todolistId1, title: "what to", filter: "active" },
-    {id: todolistId2, title: "whdfft to", filter: "completed" }
+    {id: todolistId2, title: "what?", filter: "completed" }
   ])
+
+  let removeTodolist = (todolistId: string) => {
+    let filteredTodolist = todolists.filter(tl => tl.id !== todolistId)
+    setTodolists(filteredTodolist)
+    delete tasksObj[todolistId] //удаляем свойтсво тудулиста (то, что внутри). 
+    setTasks({...tasksObj})
+  }
 
   let [tasksObj, setTasks] = useState({ //у allTasks могло бы быть свойство todolistId1/todolistId2, и вызывалось бы оно как allTasks.todolistId1. но это нам не надо так. нам нужна сама айдишка (ряд). так что мы поставили [] - и свойства у allTasks нет.
     [todolistId1]: [ //оборачиваем в [], потому что тогда мы видем не просто название todolistId1, а айдишку, которая внутри (цифры)
@@ -97,6 +105,7 @@ function App() {
             addTask={addTask}
             changeTaskStatus={changeStatus}
             filter={tl.filter}
+            removeTodolist={removeTodolist}
         />
         })
       }
